@@ -1,0 +1,53 @@
+﻿<Page x:Name="page"
+    x:Class="UWPDemoPivotNavigation.MainPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:UWPDemoPivotNavigation"
+    xmlns:ToolkitControls="using:Microsoft.Toolkit.Uwp.UI.Controls"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+      MinWidth="300">
+    <Page.Resources>
+        <local:Double2Temp x:Key="Double2Temp"/>
+    </Page.Resources>
+
+    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+        <Pivot x:Name="rootPivot" >
+            
+            <PivotItem Header="Home" ManipulationMode="None">
+                <RelativePanel>
+                    <StackPanel>
+                        
+                        <TextBlock x:Name="TextBlockNadHlaska"  FontSize="15" Text="Dneska bude ..."/>
+                        <TextBlock x:Name="TextBlockHlaska" FontSize="40"  Text="Ještě nevím" HorizontalAlignment="Center"/>
+                        <TextBlock x:Name="TextBlockStupne" FontSize="40"  Text="" HorizontalAlignment="Center"/>
+                        <TextBlock x:Name="TextBlockDestSnih" FontSize="20"  Text="" HorizontalAlignment="Center"/>
+
+                        
+                    </StackPanel>
+
+                    <Button x:Name="ButtonRefresh" Content="&#xE72C;" FontFamily="Segoe MDL2 Assets" Click="ButtonRefresh_Click" VerticalAlignment="Bottom" RelativePanel.Above="TextBlockErr" RelativePanel.AlignRightWithPanel="True"/>
+                    <TextBlock x:Name="TextBlockErr" Text="" RelativePanel.AlignBottomWithPanel="True" Margin="0,0,0,20" Foreground="Red"  />
+                </RelativePanel>
+                
+            </PivotItem>
+            <PivotItem Header="Settings" ManipulationMode="None" >
+                <StackPanel>
+                    <TextBlock Text="Nastav teplotni komfort:" />
+                    <ToolkitControls:RangeSelector x:Name="rangeSelector" Minimum="-50" Maximum="50" Width="Auto" Height="40" Margin="50,0,50,0"  ValueChanged="RangeSelector_ValueChanged"  />
+                    <RelativePanel>
+                        <TextBlock x:Name="txtOd" Text="{Binding RangeMin, Converter={StaticResource Double2Temp}, ElementName=rangeSelector}" RelativePanel.AlignLeftWithPanel="True" Margin="40,0,0,0" TextAlignment="Left"/>
+                        <TextBlock x:Name="txtDo" Text="{Binding RangeMax, Converter={StaticResource Double2Temp}, ElementName=rangeSelector}" RelativePanel.AlignRightWithPanel="True" Margin="0,0,40,0" TextAlignment="Right"/>
+                        <TextBlock x:Name="txtVychoziPoloha" Text="Výchozí poloha:" Margin="0,30,0,0" RelativePanel.Below="txtDo"/>
+                        <TextBox x:Name="TextBoxDefaultPoloha" ToolkitControls:TextBoxRegex.ValidationMode="Forced" ToolkitControls:TextBoxRegex.ValidationType="Number"   RelativePanel.AlignRightWithPanel="True" RelativePanel.AlignVerticalCenterWith="txtVychoziPoloha" Margin="0,50,50,0" Width="Auto"/>
+                        <TextBlock x:Name="txtPoznamka" Text="(OpenWeatherMap City ID)" RelativePanel.Below="txtVychoziPoloha"/>
+
+                    </RelativePanel>                    
+                </StackPanel>
+            </PivotItem>
+          
+        </Pivot>
+
+    </Grid>
+</Page>
