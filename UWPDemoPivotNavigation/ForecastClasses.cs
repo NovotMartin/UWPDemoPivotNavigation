@@ -186,8 +186,7 @@ namespace UWPDemoPivotNavigation
         /// Vrati prumernou teplotu v miste predpovedi od ted do konce dne
         /// </summary>
         public double AverageTempFromNowToEndOfADay { get {
-                // Cas od ktereho pocitam, -3h kvuli 3h periodach predpovedi
-                var n = DateTime.Now.AddHours(-3);
+                var n = DateTime.Now;
                 
 
                 var d = (from x in this.Forecast.Time
@@ -197,7 +196,7 @@ namespace UWPDemoPivotNavigation
             } }
         public  RainSnow RainSnowMilimetresFromNowToEndOfADay { get
             {
-                var n = DateTime.Now.AddHours(-3);
+                var n = DateTime.Now;
 
 
                 var d = (from x in this.Forecast.Time
@@ -217,7 +216,7 @@ namespace UWPDemoPivotNavigation
 
         public bool ForecasForNowAvailable { get
             {
-                var n = DateTime.Now.AddHours(-3);
+                var n = DateTime.Now;
                 var d = from x in this.Forecast.Time
                         where x.From.Date == n.Date && x.From.TimeOfDay >= n.TimeOfDay
                         select x;
