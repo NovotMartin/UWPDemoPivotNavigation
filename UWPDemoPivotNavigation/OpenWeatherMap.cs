@@ -123,7 +123,6 @@ namespace UWPDemoPivotNavigation
             forecastFromXML = (Weatherdata)serializer.Deserialize(stream);
 
             stream.Dispose();
-
             return forecastFromXML;
         }
 

@@ -66,6 +66,7 @@ namespace UWPDemoPivotNavigation
 
         private void Init()
         {
+            // Tady nekde poresime nacitani existujiciho nastaveni
             if (false)
             {
                 // Kdyz existuje soubor s ulozenym nastavenim
