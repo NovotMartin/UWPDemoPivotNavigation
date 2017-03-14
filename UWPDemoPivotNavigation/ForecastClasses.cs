@@ -187,12 +187,17 @@ namespace UWPDemoPivotNavigation
         /// </summary>
         public double AverageTempFromNowToEndOfADay { get {
                 var n = DateTime.Now;
-                
+
 
                 var d = (from x in this.Forecast.Time
-                        where x.From.Date == n.Date && x.From.TimeOfDay >= n.TimeOfDay
-                        select x.Temperature.Value).Average();
-                return d;
+                         where x.From.Date == n.Date && x.From.TimeOfDay >= n.TimeOfDay
+                         select x.Temperature.Value);
+                if (d != null)
+                    return d.Average();
+                else
+                    return (from x in this.Forecast.Time
+                            where x.From.Date == n.Date && x.From.TimeOfDay < n.TimeOfDay && x.To.TimeOfDay >= n.TimeOfDay
+                            select x.Temperature.Value).Average();
             } }
         public  RainSnow RainSnowMilimetresFromNowToEndOfADay { get
             {
