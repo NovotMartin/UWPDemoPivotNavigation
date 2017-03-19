@@ -21,11 +21,12 @@ namespace UWPDemoPivotNavigation
         #pragma warning disable  
         private static string  id = "00c672d6c339146e13a3157368489999";
         private static string defaultId = "00c672d6c339146e13a3157368489999";
-        private static string uri = @"api.openweathermap.org/data/2.5/forecast?id=";
-        static string f = "524901&appid=00c672d6c339146e13a3157368489999&mode=xml";
-        #pragma warning restore   
+#pragma warning restore
 
         // static HttpClient httpClient;
+        public static string ForecastbyCoordinates = " ";
+        public static string ForecastbyId = " ";
+        public static string ForecastbyName = " ";
         public static string ID {
             get {
                 return id;
@@ -50,18 +51,18 @@ namespace UWPDemoPivotNavigation
             NumberFormatInfo nfi = new NumberFormatInfo();
             nfi.NumberDecimalSeparator = ".";
 
-            Uri url = new Uri(string.Format("http://api.openweathermap.org/data/2.5/forecast?lat={0:0.0000}&lon={1:0.0000}&appid={2}&mode=xml&units=metric", lat.ToString(nfi),lon.ToString(nfi), id).Trim());
+            Uri url = new Uri(string.Format(ForecastbyCoordinates, lat.ToString(nfi),lon.ToString(nfi), id).Trim());
             Task.Run(() => Download(url));
         }
         public static void DownloadForecastbyId(int cityid)
         {
-            Uri url = new Uri(string.Format("http://api.openweathermap.org//data//2.5//forecast?id={0}&appid={1}&mode=xml&units=metric", cityid, id));
+            Uri url = new Uri(string.Format(ForecastbyId, cityid, id));
             Task.Run(() => Download(url));
             
         }
         public static void DownloadForecastbyName(string name)
         {
-            Uri url = new Uri(string.Format("http://api.openweathermap.org//data//2.5//forecast?q={0}&appid={1}&mode=xml&units=metric", name, id));
+            Uri url = new Uri(string.Format(ForecastbyName, name, id));
             Task.Run(() => Download(url));
         }
 

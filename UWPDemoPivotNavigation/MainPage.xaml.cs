@@ -15,6 +15,7 @@ using Windows.UI.Xaml.Navigation;
 using Windows.Storage;
 using Microsoft.Toolkit.Uwp;
 using System.Text;
+using System.Xml.Serialization;
 
 
 
@@ -28,6 +29,7 @@ namespace UWPDemoPivotNavigation
     /// </summary>
     public sealed partial class MainPage : Page
     {
+        Config config;
         // Controls content
         public Double TempMin { get { return Math.Round(this.rangeSelector.RangeMin, 2); } private set { this.rangeSelector.RangeMin = value; } }
         public Double TempMax { get { return Math.Round(this.rangeSelector.RangeMax, 2); } private set { this.rangeSelector.RangeMax = value; } }
@@ -40,9 +42,10 @@ namespace UWPDemoPivotNavigation
         public bool OldXMLForecastUsed { get; private set; }
         public bool IsSomethingToShow { get; private set; }
         public bool XMLDownloaded { get; private set; }
+        public bool IsConfigFileAvailable { get; private set; } 
         public DateTime LastSuccessForecastDownload { get; private set; }
 
-
+        private bool writingFile = false;
         PositionEventArg ee;
         // Forecast object
         public Weatherdata Forecast { get; private set; }
@@ -53,34 +56,68 @@ namespace UWPDemoPivotNavigation
         {
             this.InitializeComponent();
                         
-
+            
             OpenWeatherMap.OnDownloadComplete += OpenWeatherMap_onDownloadComplete; // nastaveni eventu co se provede po stazeni
             GeoLocation.OnLocate += GeoLocation_OnLocate;
 
             Init();
+            InitAync(); 
 
-            
+            //GetLocationWeather();
+
+        }
+
+        private async void InitAync()
+        {
+            IsConfigFileAvailable = false;
+            StorageFolder sf = ApplicationData.Current.LocalFolder;
+            IsConfigFileAvailable = await sf.FileExistsAsync("Nastaveni.xml");
+            if (IsConfigFileAvailable)
+            {
+                LoadConfig(sf);
+            }
+            else
+            {
+                sf = Windows.ApplicationModel.Package.Current.InstalledLocation;
+                LoadConfig(sf);            
+            }
+        }
+
+        private async void LoadConfig(StorageFolder sf)
+        {
+            IsConfigFileAvailable = true;
+            var file = await sf.GetFileAsync("Nastaveni.xml");
+            config = await ConfigSerializer.GetConfig(file);          
+            Init();
             GetLocationWeather();
-
+            
         }
 
         private void Init()
         {
-            // Tady nekde poresime nacitani existujiciho nastaveni
-            if (false)
+            if (IsConfigFileAvailable)
             {
-                // Kdyz existuje soubor s ulozenym nastavenim
+                this.TempMax = config.AppConfig.TempMax;
+                this.TempMin = config.AppConfig.TempMin;
+                this.DefaultCityID = config.AppConfig.DefaultCityID;
 
-
-            }
-            else
-            {
-                this.TempMin = -30;
-                this.TempMax = 20;
-                this.DefaultCityID = 3063548; //( id = Usti nad Labem)
-            }
+                OpenWeatherMap.ForecastbyCoordinates = config.OpenWeatherMapConfig.ForecastbyCoordinates;
+                OpenWeatherMap.ForecastbyId = config.OpenWeatherMapConfig.ForecastbyId;
+                OpenWeatherMap.ForecastbyName = config.OpenWeatherMapConfig.ForecastbyName;
+            }                 
         }
 
+        private async void SaveConfig()
+        {
+            if (!writingFile)
+            {
+                writingFile = true;
+                StorageFolder sf = ApplicationData.Current.LocalFolder;
+                var file = await sf.CreateFileAsync("Nastaveni.xml", CreationCollisionOption.ReplaceExisting);
+                ConfigSerializer.SetConfig(config, file);
+                writingFile = false;
+            }
+        }
         private void GetLocationWeather()
         {
             GeoLocation.GetLocation();
@@ -130,12 +167,17 @@ namespace UWPDemoPivotNavigation
             {
                 // Lokalizovano na zaklade polohy zarizeni
                 OpenWeatherMap.DownloadForecastbyCoordinates(e.Pos.Coordinate.Point.Position.Latitude, e.Pos.Coordinate.Point.Position.Longitude);
+                config.AppConfig.DefaultCityID = Convert.ToInt32(Forecast.Location.Geobaseid);
             }
             else
             {
                 // Neznam polohu
                 OpenWeatherMap.DownloadForecastbyId(DefaultCityID);
+                config.AppConfig.DefaultCityID = DefaultCityID;
             }
+            config.AppConfig.TempMax = this.TempMax;
+            config.AppConfig.TempMin = this.TempMin;
+            SaveConfig();
         }
         
         private void ShowForecast(bool status)
@@ -174,7 +216,8 @@ namespace UWPDemoPivotNavigation
 
             }
             ShowErrors();
-                
+
+            
         }
         public void ShowErrors()
         {

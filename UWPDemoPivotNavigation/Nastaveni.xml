@@ -1,0 +1,10 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Config>
+  <OpenWeatherMapConfig ID="00c672d6c339146e13a3157368489999"
+                        ForecastbyCoordinates="http://api.openweathermap.org/data/2.5/forecast?lat={0:0.0000}&amp;lon={1:0.0000}&amp;appid={2}&amp;mode=xml&amp;units=metric"
+                        ForecastbyId="http://api.openweathermap.org//data//2.5//forecast?id={0}&amp;appid={1}&amp;mode=xml&amp;units=metric"
+                        ForecastbyName="http://api.openweathermap.org//data//2.5//forecast?q={0}&amp;appid={1}&amp;mode=xml&amp;units=metric"
+                        >  
+  </OpenWeatherMapConfig>
+  <AppConfig TempMax="23" TempMin="16" DefaultCityID="3062105" ></AppConfig>
+</Config>
