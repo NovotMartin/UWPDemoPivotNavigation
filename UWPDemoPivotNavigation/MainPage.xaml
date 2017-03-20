@@ -14,23 +14,17 @@
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
         <Pivot x:Name="rootPivot" >
-            
             <PivotItem Header="Home" ManipulationMode="None">
                 <RelativePanel>
                     <StackPanel>
-                        
                         <TextBlock x:Name="TextBlockNadHlaska"  FontSize="15" Text="Dneska bude ..."/>
                         <TextBlock x:Name="TextBlockHlaska" FontSize="40"  Text="Ještě nevím" HorizontalAlignment="Center"/>
                         <TextBlock x:Name="TextBlockStupne" FontSize="40"  Text="" HorizontalAlignment="Center"/>
                         <TextBlock x:Name="TextBlockDestSnih" FontSize="20"  Text="" HorizontalAlignment="Center"/>
-
-                        
                     </StackPanel>
-
                     <Button x:Name="ButtonRefresh" Content="&#xE72C;" FontFamily="Segoe MDL2 Assets" Click="ButtonRefresh_Click" VerticalAlignment="Bottom" RelativePanel.Above="TextBlockErr" RelativePanel.AlignRightWithPanel="True"/>
                     <TextBlock x:Name="TextBlockErr" Text="" RelativePanel.AlignBottomWithPanel="True" Margin="0,0,0,20" Foreground="Red"  />
                 </RelativePanel>
-                
             </PivotItem>
             <PivotItem Header="Settings" ManipulationMode="None" >
                 <StackPanel>
@@ -42,12 +36,14 @@
                         <TextBlock x:Name="txtVychoziPoloha" Text="Výchozí poloha:" Margin="0,30,0,0" RelativePanel.Below="txtDo"/>
                         <TextBox x:Name="TextBoxDefaultPoloha" ToolkitControls:TextBoxRegex.ValidationMode="Forced" ToolkitControls:TextBoxRegex.ValidationType="Number"   RelativePanel.AlignRightWithPanel="True" RelativePanel.AlignVerticalCenterWith="txtVychoziPoloha" Margin="0,50,50,0" Width="Auto"/>
                         <TextBlock x:Name="txtPoznamka" Text="(OpenWeatherMap City ID)" RelativePanel.Below="txtVychoziPoloha"/>
-
-                    </RelativePanel>                    
+                    </RelativePanel>
                 </StackPanel>
             </PivotItem>
-          
         </Pivot>
-
+        <CommandBar VerticalAlignment="Bottom" Height="65">
+            <AppBarButton Icon="Refresh" Label="Refresh" Click="ButtonRefresh_Click"></AppBarButton>
+            <AppBarButton Icon="Send" Label="Share" Click="ShareButton_Click"></AppBarButton>
+        </CommandBar>
     </Grid>
+   
 </Page>

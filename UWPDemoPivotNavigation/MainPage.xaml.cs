@@ -16,6 +16,7 @@ using Windows.Storage;
 using Microsoft.Toolkit.Uwp;
 using System.Text;
 using System.Xml.Serialization;
+using Microsoft.Toolkit.Uwp.Services.Facebook;
 
 
 
@@ -34,7 +35,7 @@ namespace UWPDemoPivotNavigation
         public Double TempMin { get { return Math.Round(this.rangeSelector.RangeMin, 2); } private set { this.rangeSelector.RangeMin = value; } }
         public Double TempMax { get { return Math.Round(this.rangeSelector.RangeMax, 2); } private set { this.rangeSelector.RangeMax = value; } }
         public int DefaultCityID { get { return Convert.ToInt32(this.TextBoxDefaultPoloha.Text); } private set { this.TextBoxDefaultPoloha.Text = value.ToString(); } }
-
+        public string facebookApiId = "727309760760758";
         // Errors properties
         public bool XMLForecastAvailable { get; private set; }        
         public bool NetworkAvailable { get { return ConnectionHelper.IsInternetAvailable; } }
@@ -60,7 +61,12 @@ namespace UWPDemoPivotNavigation
             OpenWeatherMap.OnDownloadComplete += OpenWeatherMap_onDownloadComplete; // nastaveni eventu co se provede po stazeni
             GeoLocation.OnLocate += GeoLocation_OnLocate;
 
-            Init();
+            // Put the following code in your mainform loaded event
+            // Note that this will not work in the App.xaml.cs Loaded
+            #if DEBUG
+            System.Diagnostics.Debug.WriteLine("Windows Store SID = " + Microsoft.Toolkit.Uwp.Services.Facebook.FacebookService.Instance.WindowsStoreId);
+            #endif
+            Init();  // asi zbytečnost ??? 
             InitAync(); 
 
             //GetLocationWeather();
@@ -167,7 +173,7 @@ namespace UWPDemoPivotNavigation
             {
                 // Lokalizovano na zaklade polohy zarizeni
                 OpenWeatherMap.DownloadForecastbyCoordinates(e.Pos.Coordinate.Point.Position.Latitude, e.Pos.Coordinate.Point.Position.Longitude);
-                config.AppConfig.DefaultCityID = Convert.ToInt32(Forecast.Location.Geobaseid);
+               // config.AppConfig.DefaultCityID = Convert.ToInt32(Forecast.Location.Geobaseid);
             }
             else
             {
@@ -253,6 +259,17 @@ namespace UWPDemoPivotNavigation
         private void ButtonRefresh_Click(object sender, RoutedEventArgs e)
         {
             GetLocationWeather();
+        }
+
+        private async void ShareButton_Click(object sender, RoutedEventArgs e)
+        {
+            FacebookService.Instance.Initialize(facebookApiId);
+            if (!await FacebookService.Instance.LoginAsync())
+            {
+                return;
+            }
+            //await FacebookService.Instance.PostToFeedWithDialogAsync(TitleText.Text, DescriptionText.Text, UrlText.Text);
+            await FacebookService.Instance.PostToFeedWithDialogAsync("Facebook app","Tady bude jednou napsano neco strasne duleziteho","??");
         }
     }
 }
