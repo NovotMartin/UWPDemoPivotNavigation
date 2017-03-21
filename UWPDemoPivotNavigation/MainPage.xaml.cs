@@ -201,7 +201,7 @@ namespace UWPDemoPivotNavigation
                 // Doplnění řádku o srážkách
                 var rainsnow = this.Forecast.RainSnowMilimetresFromNowToEndOfADay;
                 if (rainsnow.type != PrecipitationType.None)
-                    this.TextBlockDestSnih.Text = string.Format("{0} - {1}mm", rainsnow.type == PrecipitationType.Rain ? "Déšť" : "Sníh", rainsnow.milimetres);
+                    this.TextBlockDestSnih.Text = string.Format("{0} - {1}mm", rainsnow.type == PrecipitationType.Rain ? "Déšť" : "Sníh", Math.Round(rainsnow.milimetres,2));
 
 
                 if (temp < TempMin)
