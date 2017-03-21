@@ -32,7 +32,7 @@
                         <TextBlock x:Name="TextBlockStupne" FontSize="40"  Text="" HorizontalAlignment="Center"/>
                         <TextBlock x:Name="TextBlockDestSnih" FontSize="20"  Text="" HorizontalAlignment="Center"/>
                     </StackPanel>
-                    <Button x:Name="ButtonRefresh" Content="&#xE72C;" FontFamily="Segoe MDL2 Assets" Click="ButtonRefresh_Click" VerticalAlignment="Bottom" RelativePanel.Above="TextBlockErr" RelativePanel.AlignRightWithPanel="True"/>
+                    
                     <TextBlock x:Name="TextBlockErr" Text="" RelativePanel.AlignBottomWithPanel="True" Margin="0,0,0,20" Foreground="Red"  />
                 </RelativePanel>
             </PivotItem>
