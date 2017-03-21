@@ -113,6 +113,25 @@
     <None Include="UWPDemoPivotNavigation_TemporaryKey.pfx" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Assets\weathericons\01d.png" />
+    <Content Include="Assets\weathericons\01n.png" />
+    <Content Include="Assets\weathericons\02d.png" />
+    <Content Include="Assets\weathericons\02n.png" />
+    <Content Include="Assets\weathericons\03d.png" />
+    <Content Include="Assets\weathericons\03n.png" />
+    <Content Include="Assets\weathericons\04d.png" />
+    <Content Include="Assets\weathericons\04n.png" />
+    <Content Include="Assets\weathericons\09d.png" />
+    <Content Include="Assets\weathericons\09n.png" />
+    <Content Include="Assets\weathericons\10d.png" />
+    <Content Include="Assets\weathericons\10n.png" />
+    <Content Include="Assets\weathericons\11d.png" />
+    <Content Include="Assets\weathericons\11n.png" />
+    <Content Include="Assets\weathericons\13d.png" />
+    <Content Include="Assets\weathericons\13n.png" />
+    <Content Include="Assets\weathericons\50d.png" />
+    <Content Include="Assets\weathericons\50n.png" />
+    <Content Include="Assets\weathericons\qmark.png" />
     <Content Include="Properties\Default.rd.xml" />
     <Content Include="Assets\LockScreenLogo.scale-200.png" />
     <Content Include="Assets\SplashScreen.scale-200.png" />

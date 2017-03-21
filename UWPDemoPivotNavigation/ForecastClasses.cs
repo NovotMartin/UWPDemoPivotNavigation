@@ -188,6 +188,9 @@ namespace UWPDemoPivotNavigation
         public double AverageTempFromNowToEndOfADay { get {
                 var n = DateTime.Now;
 
+                if (n.Hour >= 21)
+                    n.AddDays(1);
+                n.AddHours(-n.Hour);
 
                 var d = (from x in this.Forecast.Time
                          where x.From.Date == n.Date && x.From.TimeOfDay >= n.TimeOfDay
@@ -202,6 +205,9 @@ namespace UWPDemoPivotNavigation
         public  RainSnow RainSnowMilimetresFromNowToEndOfADay { get
             {
                 var n = DateTime.Now;
+                if (n.Hour >= 21)
+                    n.AddDays(1);
+                n.AddHours(-n.Hour);
 
 
                 var d = (from x in this.Forecast.Time
@@ -222,13 +228,33 @@ namespace UWPDemoPivotNavigation
         public bool ForecasForNowAvailable { get
             {
                 var n = DateTime.Now;
+                if (n.Hour >= 21)
+                    n.AddDays(1);
+                n.AddHours(-n.Hour);
+
                 var d = from x in this.Forecast.Time
                         where x.From.Date == n.Date && x.From.TimeOfDay >= n.TimeOfDay
                         select x;
                 return (d != null || d.Count() >= 1);
             } }
         
+        public string GetIconName
+        {
+            get
+            {
+                var n = DateTime.Now;
+                if (n.Hour >= 21)
+                    n.AddDays(1);
+                n.AddHours(-n.Hour);
 
+                var d = (from x in this.Forecast.Time
+                         where x.From.Date == n.Date && x.From.TimeOfDay >= n.TimeOfDay
+                         select x).OrderBy(x => x.From.TimeOfDay).First();
+                return d.Symbol.Var;
+
+
+            }
+        }
 
     }
 

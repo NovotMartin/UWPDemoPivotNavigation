@@ -31,6 +31,7 @@
                         <TextBlock x:Name="TextBlockHlaska" FontSize="40"  Text="Ještě nevím" HorizontalAlignment="Center"/>
                         <TextBlock x:Name="TextBlockStupne" FontSize="40"  Text="" HorizontalAlignment="Center"/>
                         <TextBlock x:Name="TextBlockDestSnih" FontSize="20"  Text="" HorizontalAlignment="Center"/>
+                        <Image x:Name="ImageWeatherIcon" Width="200" Height="200" HorizontalAlignment="Center"/>
                     </StackPanel>
                     
                     <TextBlock x:Name="TextBlockErr" Text="" RelativePanel.AlignBottomWithPanel="True" Margin="0,0,0,20" Foreground="Red"  />

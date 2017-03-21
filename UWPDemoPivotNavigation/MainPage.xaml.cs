@@ -17,6 +17,7 @@ using Microsoft.Toolkit.Uwp;
 using System.Text;
 using System.Xml.Serialization;
 using Microsoft.Toolkit.Uwp.Services.Facebook;
+using Windows.UI.Xaml.Media.Imaging;
 
 
 
@@ -197,6 +198,11 @@ namespace UWPDemoPivotNavigation
                 this.TextBlockNadHlaska.Text = string.Format("Dneska bude v {0}", Forecast.Location.Name);
                 this.TextBlockStupne.Text = temp + " °C";
 
+                // Doplnění řádku o srážkách
+                var rainsnow = this.Forecast.RainSnowMilimetresFromNowToEndOfADay;
+                if (rainsnow.type != PrecipitationType.None)
+                    this.TextBlockDestSnih.Text = string.Format("{0} - {1}mm", rainsnow.type == PrecipitationType.Rain ? "Déšť" : "Sníh", rainsnow.milimetres);
+
 
                 if (temp < TempMin)
                 {
@@ -212,14 +218,19 @@ namespace UWPDemoPivotNavigation
                 {
                     // V komfortni zone
                     TextBlockHlaska.Text = "Akorát";
-                }                
+                }
+
+
+                var icon = String.Format("ms-appx:///Assets/weathericons/{0}.png", Forecast.GetIconName);
+                this.ImageWeatherIcon.Source = new BitmapImage(new Uri(icon, UriKind.Absolute));
             }
             else
             {
                 this.TextBlockHlaska.Text = "Ještě nevím";
                 this.TextBlockStupne.Text = "??" + " °C";
                 this.TextBlockNadHlaska.Text = "Dneska bude...";
-
+                this.TextBlockDestSnih.Text = "";
+                this.ImageWeatherIcon.Source = new BitmapImage(new Uri("ms-appx:///Assets/weathericons/qmark.png",UriKind.Absolute));
             }
             ShowErrors();
 
