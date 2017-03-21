@@ -12,7 +12,17 @@
         <local:Double2Temp x:Key="Double2Temp"/>
     </Page.Resources>
 
+    <Page.BottomAppBar>
+        <CommandBar >
+            <AppBarButton Icon="Refresh" Label="Refresh" Click="ButtonRefresh_Click"></AppBarButton>
+            <AppBarButton Icon="Send" Label="Share" Click="ShareButton_Click"></AppBarButton>
+        </CommandBar>
+    </Page.BottomAppBar>
+    
+    
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+        
+        
         <Pivot x:Name="rootPivot" >
             <PivotItem Header="Home" ManipulationMode="None">
                 <RelativePanel>
@@ -40,10 +50,7 @@
                 </StackPanel>
             </PivotItem>
         </Pivot>
-        <CommandBar VerticalAlignment="Bottom" Height="65">
-            <AppBarButton Icon="Refresh" Label="Refresh" Click="ButtonRefresh_Click"></AppBarButton>
-            <AppBarButton Icon="Send" Label="Share" Click="ShareButton_Click"></AppBarButton>
-        </CommandBar>
+        
     </Grid>
    
 </Page>
