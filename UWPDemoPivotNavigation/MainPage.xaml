@@ -8,6 +8,9 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
       MinWidth="300" >
+
+    
+    
     <Page.Resources>
         <local:Double2Temp x:Key="Double2Temp"/>
     </Page.Resources>
@@ -21,10 +24,21 @@
     
     
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-        
-        
-        <Pivot x:Name="rootPivot" >
-            <PivotItem Header="Home" ManipulationMode="None">
+        <VisualStateManager.VisualStateGroups>
+            <VisualStateGroup>
+                <VisualState>
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="720"/>
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="PivotHome.HorizontalContentAlignment" Value="Left" />
+                    </VisualState.Setters>
+                </VisualState>
+            </VisualStateGroup>
+        </VisualStateManager.VisualStateGroups>
+
+        <Pivot x:Name="rootPivot"  >
+            <PivotItem Header="Home" ManipulationMode="None"  x:Name="PivotHome" HorizontalContentAlignment="Center">
                 <RelativePanel>
                     <StackPanel>
                         <TextBlock x:Name="TextBlockNadHlaska"  FontSize="15" Text="Dneska bude ..."/>
@@ -37,7 +51,7 @@
                     <TextBlock x:Name="TextBlockErr" Text="" RelativePanel.AlignBottomWithPanel="True" Margin="0,0,0,20" Foreground="Red"  />
                 </RelativePanel>
             </PivotItem>
-            <PivotItem Header="Settings" ManipulationMode="None" >
+            <PivotItem Header="Settings" ManipulationMode="None" x:Name="PivotSetting" >
                 <StackPanel>
                     <TextBlock Text="Nastav teplotni komfort:" />
                     <ToolkitControls:RangeSelector x:Name="rangeSelector" Minimum="-50" Maximum="50" Width="Auto" Height="40" Margin="50,0,50,0"  ValueChanged="RangeSelector_ValueChanged"  />
