@@ -125,6 +125,7 @@ namespace UWPDemoPivotNavigation
                 writingFile = false;
             }
         }
+
         private void GetLocationWeather()
         {
             GeoLocation.GetLocation();
